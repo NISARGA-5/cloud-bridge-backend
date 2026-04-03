@@ -5,7 +5,7 @@ import logging
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-from azure.communication.email import EmailClient
+# from azure.communication.email import EmailClient
 
 from config import Config
 from models.db import init_db
@@ -13,10 +13,10 @@ from routes.auth import auth_bp
 from routes.files import files_bp
 
 # ✅ App Insights
-from opencensus.ext.azure.log_exporter import AzureLogHandler
-from opencensus.ext.azure.trace_exporter import AzureExporter
-from opencensus.trace.samplers import ProbabilitySampler
-from opencensus.ext.flask.flask_middleware import FlaskMiddleware
+#from opencensus.ext.azure.log_exporter import AzureLogHandler
+#rom opencensus.ext.azure.trace_exporter import AzureExporter
+#from opencensus.trace.samplers import ProbabilitySampler
+#from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 
 # =========================================================
