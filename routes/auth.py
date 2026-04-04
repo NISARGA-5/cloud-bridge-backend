@@ -114,7 +114,7 @@ def register():
     metadata = json.dumps({"registered_via": "web", "otp_verified": True})
 
     user_id = execute(
-        "INSERT INTO users (name, email, password, age, role, metadata) VALUES (%s,%s,%s,%s,%s,%s)",
+        "INSERT INTO users (name, email, password_hash, age, role, metadata) VALUES (%s,%s,%s,%s,%s,%s)",
         (name, email, hashed, age, 'user', metadata),
         get_id=True
     )
@@ -141,7 +141,7 @@ def login():
 
     user = query("SELECT * FROM users WHERE email=%s", (email,), one=True)
 
-    if not user or not check_password_hash(user['password'], password):
+    if not user or not check_password_hash(user['password_hash'], password):
         return jsonify({'error': 'Invalid email or password'}), 401
 
     if not user['is_active']:
