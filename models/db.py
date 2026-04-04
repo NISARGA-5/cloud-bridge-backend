@@ -5,13 +5,12 @@ from flask import g
 def get_db():
     if 'db' not in g:
         g.db = pymysql.connect(
-            host="10.142.240.2",              # ✅ Cloud SQL private IP
-            user="appuser",                   # ✅ your GCP DB user
-            password="Strongpassword-1",      # ✅ SAME as Cloud SQL
-            database="cloudbridge",           # ✅ your DB name
+            host="10.142.240.2",              # Cloud SQL private IP
+            user="appuser",                   
+            password="Strongpassword-1",      
+            database="cloud_bridge_db",       # ✅ FIXED HERE
             cursorclass=pymysql.cursors.DictCursor,
-            autocommit=True,
-            ssl={'ssl': {}}
+            autocommit=True
         )
     return g.db
 
