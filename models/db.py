@@ -1,16 +1,16 @@
 import pymysql
-from flask import g, current_app
+from flask import g
 
 # ── CONNECTION ────────────────────────────────────────────
 def get_db():
     if 'db' not in g:
         g.db = pymysql.connect(
-            host="localhost",
-            user="azureuser",
-            password="pass123",   # 🔴 CHANGE THIS
-            database="cloudbridge",
+            host="10.142.240.2",              # ✅ Cloud SQL private IP
+            user="appuser",                   # ✅ your GCP DB user
+            password="Strongpassword-1",      # ✅ SAME as Cloud SQL
+            database="cloudbridge",           # ✅ your DB name
             cursorclass=pymysql.cursors.DictCursor,
-            autocommit=False
+            autocommit=True                  # ✅ IMPORTANT
         )
     return g.db
 
@@ -27,19 +27,17 @@ def query(sql, params=(), one=False):
     with db.cursor() as cur:
         cur.execute(sql, params)
         rows = cur.fetchall()
-        result = rows
-    return result[0] if one and result else (None if one else result)
+    return rows[0] if one and rows else (None if one else rows)
 
 
 def execute(sql, params=(), get_id=False):
     db = get_db()
     with db.cursor() as cur:
         cur.execute(sql, params)
-        db.commit()
         return cur.lastrowid if get_id else cur.rowcount
 
 
 # ── INIT DB ───────────────────────────────────────────────
 def init_db():
-    # Tables already created in MariaDB → no need to recreate
+    # Tables already exist → no action needed
     pass
