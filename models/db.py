@@ -10,7 +10,8 @@ def get_db():
             password="Strongpassword-1",      
             database="cloud_bridge_db",       # ✅ FIXED HERE
             cursorclass=pymysql.cursors.DictCursor,
-            autocommit=True
+            autocommit=True,
+            ssl={"ssl": {}}
         )
     return g.db
 
