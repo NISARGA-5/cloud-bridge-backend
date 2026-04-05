@@ -35,43 +35,43 @@ SENDER_EMAIL = "DoNotReply@64c29b1c-cbd9-4615-afb8-4fa2185a3bfc.azurecomm.net"
 # =========================================================
 # ✅ LOGGING SETUP
 # =========================================================
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+#logger = logging.getLogger(__name__)
+#logger.setLevel(logging.INFO)
 
-try:
-    handler = AzureLogHandler(connection_string=APPINSIGHTS_CONNECTION_STRING)
-    logger.addHandler(handler)
-except Exception as e:
-    print("App Insights logging failed:", e)
+#try:
+ #   handler = AzureLogHandler(connection_string=APPINSIGHTS_CONNECTION_STRING)
+ #   logger.addHandler(handler)
+#except Exception as e:
+ #   print("App Insights logging failed:", e)
 
-logger.warning("🚀 APP STARTED")
+#logger.warning("🚀 APP STARTED")
 
 
 # =========================================================
 # ✅ EMAIL FUNCTION
 # =========================================================
-def send_email(to_email, subject, body):
-    try:
-        client = EmailClient.from_connection_string(ACS_CONNECTION_STRING)
+#def send_email(to_email, subject, body):
+ #   try:
+  #      client = EmailClient.from_connection_string(ACS_CONNECTION_STRING)
+#
+ #       message = {
+  #          "senderAddress": SENDER_EMAIL,
+   #         "recipients": {
+    #            "to": [{"address": to_email}]
+     #       },
+      #      "content": {
+       #         "subject": subject,
+        #        "html": body
+         #   }
+        #}
 
-        message = {
-            "senderAddress": SENDER_EMAIL,
-            "recipients": {
-                "to": [{"address": to_email}]
-            },
-            "content": {
-                "subject": subject,
-                "html": body
-            }
-        }
+        #poller = client.begin_send(message)
+        #poller.result()
 
-        poller = client.begin_send(message)
-        poller.result()
+        #print("✅ Email sent successfully")
 
-        print("✅ Email sent successfully")
-
-    except Exception as e:
-        print("❌ Email error:", str(e))
+#    except Exception as e:
+ #       print("❌ Email error:", str(e))
 
 
 def send_email_async(to_email, subject, body):
@@ -90,14 +90,14 @@ def create_app():
     app.config.from_object(Config)
 
     # App Insights middleware
-    try:
-        FlaskMiddleware(
-            app,
-            exporter=AzureExporter(connection_string=APPINSIGHTS_CONNECTION_STRING),
-            sampler=ProbabilitySampler(1.0),
-        )
-    except Exception as e:
-        print("❌ Middleware failed:", e)
+#    try:
+ #       FlaskMiddleware(
+  #          app,
+   #         exporter=AzureExporter(connection_string=APPINSIGHTS_CONNECTION_STRING),
+    #        sampler=ProbabilitySampler(1.0),
+     #   )
+   # except Exception as e:
+    #    print("❌ Middleware failed:", e)
 
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
